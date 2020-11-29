@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">My Task</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="todo">TODO</string>
+    <string name="signup">SignUp</string>
+    <string name="sign_in">Sign In</string>
+    <string name="already_have_account">Already have account ?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="dont_have_account">Dont have Account ?</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="name">Nama</string>
+    <string-array name="login_as">
+        <item>dosen</item>
+        <item>mahasiswa</item>
+    </string-array>
+
+
+</resources>

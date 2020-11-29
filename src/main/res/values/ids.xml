@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="txtTaskComment" type="id" />
+    <item name="imgTaskPhoto" type="id" />
+    <item name="btnTaskComment" type="id" />
+</resources>
