@@ -49,19 +49,20 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         return list.size();
     }
 
-     class CommentHoder extends RecyclerView.ViewHolder{
-        private CircleImageView imgProfile;
-        private TextView txtName, txtDate, txtComment;
-        private ImageButton btnOption;
+      class CommentHoder extends RecyclerView.ViewHolder {
+          private CircleImageView imgProfile;
+          private TextView txtName, txtDate, txtComment;
+          private ImageButton btnOption;
 
-        public CommentHoder(@NonNull View itemView) {
-            super(itemView);
+          public CommentHoder(@NonNull View itemView) {
+              super(itemView);
 
-            imgProfile = itemView.findViewById(R.id.imgCommentProfile);
-            txtName = itemView.findViewById(R.id.txtCommentName);
-            txtDate = itemView.findViewById(R.id.txtCommentDate);
-            txtComment =  itemView.findViewById(R.id.txtCommentText);
-            btnOption = itemView.findViewById(R.id.btnCommentOption);
-        }
+              imgProfile = itemView.findViewById(R.id.imgCommentProfile);
+              txtName = itemView.findViewById(R.id.txtCommentName);
+              txtDate = itemView.findViewById(R.id.txtCommentDate);
+              txtComment = itemView.findViewById(R.id.txtCommentText);
+              btnOption = itemView.findViewById(R.id.btnCommentOption);
+          }
+
     }
 }

@@ -1,5 +1,6 @@
 package com.example.mytask.Adapter;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -48,7 +49,7 @@ public class TaskAdapter extends RecyclerView.Adapter <TaskAdapter.TaskHolder>{
     private Context context;
     private ArrayList<Task> list;
     private ArrayList<Task> listAll;
-    SharedPreferences preferences;
+    private SharedPreferences preferences;
 
 
 
@@ -66,13 +67,14 @@ public class TaskAdapter extends RecyclerView.Adapter <TaskAdapter.TaskHolder>{
         return new TaskHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull TaskHolder holder, int position) {
         Task task = list.get(position);
         Picasso.get().load(Constant.URL+"storage/profiles/"+task.getUser().getPhoto()).into(holder.imgProfile);
         Picasso.get().load(Constant.URL+"storage/task/"+task.getPhoto()).into(holder.imgTask);
         holder.txtName.setText(task.getUser().getUserName());
-        holder.txtComment.setText("View All Comment"+task.getComments());
+        holder.txtComment.setText("View All "+task.getComments()+ " Comment");
         holder.txtDate.setText(task.getDate());
         holder.txtDesc.setText(task.getDesc());
 
@@ -137,16 +139,13 @@ public class TaskAdapter extends RecyclerView.Adapter <TaskAdapter.TaskHolder>{
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-
-
                             }, error -> {
-
                             }){
                                 @Override
                                 public Map<String, String> getHeaders() throws AuthFailureError {
                                     String token = preferences.getString("token", "");
                                     HashMap<String,String> map = new HashMap<>();
-                                    map.put("Autorization", "Bearer"+token);
+                                    map.put("Authorization", "Bearer"+token);
                                     return map;
                                 }
 

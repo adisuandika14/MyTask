@@ -38,7 +38,7 @@ public class CommentActivity extends AppCompatActivity {
     private CommentsAdapter adapter;
     private int taskId=0;
     public static int postPosition =0;
-    SharedPreferences preferences;
+    private SharedPreferences preferences;
     private EditText txtAddComment;
     private ProgressDialog dialog;
 
@@ -65,12 +65,12 @@ public class CommentActivity extends AppCompatActivity {
 
     private void getComments() {
         list = new ArrayList<>();
-        StringRequest request = new StringRequest(Request.Method.POST,Constant.COMMENT, response -> {
+        StringRequest request = new StringRequest(Request.Method.GET,Constant.COMMENT, response -> {
 
             try {
                 JSONObject object = new JSONObject(response);
                 if(object.getBoolean("success")){
-                    JSONArray comments = new JSONArray(object.getString("comment"));
+                    JSONArray comments = new JSONArray(object.getString("comments"));
                     for (int i = 0; i < comments.length(); i++){
                         JSONObject comment = comments.getJSONObject(i);
                         JSONObject user = comment.getJSONObject("user");
@@ -78,8 +78,8 @@ public class CommentActivity extends AppCompatActivity {
 
                         User mUser = new User();
                         mUser.setId(user.getInt("id"));
-                        mUser.setPhoto(Constant.URL+"storage/profiles/"+user.getString("photo"));
-                        mUser.setUserName(user.getString("nama"));
+                        //mUser.setPhoto(Constant.URL+"storage/profiles/"+user.getString("photo"));
+                        mUser.setUserName(user.getString("name"));
 
                         Comment mComment = new Comment();
                         mComment.setId(comment.getInt("id"));
@@ -103,7 +103,7 @@ public class CommentActivity extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 String token = preferences.getString("token","");
                 HashMap<String,String> map = new HashMap<>();
-                map.put("Autorization", "Bearer"+token);
+                map.put("Authorization", "Bearer"+token);
                 return map;
             }
 
@@ -119,6 +119,7 @@ public class CommentActivity extends AppCompatActivity {
     }
 
     public void goBack(View view) {
+
         super.onBackPressed();
     }
 

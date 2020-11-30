@@ -12,6 +12,6 @@ public class Constant {
         public static final String UPDATE_POST = TASK+"/update";
         public static final String DELETE_POST = TASK+"/delete";
         public static final String COMMENT = TASK+"/comment";
-        public static final String DELETE_COMMENT = HOME+"/comment/delete";
-        public static final String CREATE_COMMENT = HOME+"/comment/create";
+        public static final String DELETE_COMMENT = TASK+"/comment/delete";
+        public static final String CREATE_COMMENT = TASK+"/comment/create";
 }
