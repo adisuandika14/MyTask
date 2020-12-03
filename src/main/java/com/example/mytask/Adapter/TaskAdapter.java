@@ -67,14 +67,15 @@ public class TaskAdapter extends RecyclerView.Adapter <TaskAdapter.TaskHolder>{
         return new TaskHolder(view);
     }
 
-    @SuppressLint("SetTextI18n")
+
+
     @Override
     public void onBindViewHolder(@NonNull TaskHolder holder, int position) {
         Task task = list.get(position);
         Picasso.get().load(Constant.URL+"storage/profiles/"+task.getUser().getPhoto()).into(holder.imgProfile);
         Picasso.get().load(Constant.URL+"storage/task/"+task.getPhoto()).into(holder.imgTask);
         holder.txtName.setText(task.getUser().getUserName());
-        holder.txtComment.setText("View All "+task.getComments()+ " Comment");
+        holder.txtComment.setText("View All  "+task.getComments()+ " Comment");
         holder.txtDate.setText(task.getDate());
         holder.txtDesc.setText(task.getDesc());
 
@@ -83,20 +84,6 @@ public class TaskAdapter extends RecyclerView.Adapter <TaskAdapter.TaskHolder>{
         }else{
             holder.btnTaskOption.setVisibility(View.GONE);
         }
-
-        holder.txtComment.setOnClickListener(v->{
-            Intent i = new Intent(((HomeActivity)context), CommentActivity.class);
-            i.putExtra("task_id",task.getId());
-            i.putExtra("postPosition",position);
-            context.startActivity(i);
-        });
-
-        holder.btnComment.setOnClickListener(v->{
-            Intent i = new Intent(((HomeActivity)context),CommentActivity.class);
-            i.putExtra("task_id",task.getId());
-            i.putExtra("postPosition",position);
-            context.startActivity(i);
-        });
 
         holder.btnTaskOption.setOnClickListener(V->{
             PopupMenu popupMenu = new PopupMenu(context, holder.btnTaskOption);
@@ -172,7 +159,21 @@ public class TaskAdapter extends RecyclerView.Adapter <TaskAdapter.TaskHolder>{
             popupMenu.show();
         });
 
+        holder.txtComment.setOnClickListener(v->{
+            Intent i = new Intent(((HomeActivity)context), CommentActivity.class);
+            i.putExtra("id",task.getId());
+            i.putExtra("taskPosition",position);
+            context.startActivity(i);
+        });
+
+        holder.btnComment.setOnClickListener(v->{
+            Intent i = new Intent(((HomeActivity)context),CommentActivity.class);
+            i.putExtra("id",task.getId());
+            i.putExtra("taskPosition",position);
+            context.startActivity(i);
+        });
     }
+
 
     @Override
     public int getItemCount() {
@@ -212,7 +213,7 @@ public class TaskAdapter extends RecyclerView.Adapter <TaskAdapter.TaskHolder>{
         return filter;
     }
 
-    class TaskHolder extends RecyclerView.ViewHolder{
+    static class TaskHolder extends RecyclerView.ViewHolder{
 
         private TextView txtName, txtDate,txtDesc, txtComment;
         private CircleImageView imgProfile;

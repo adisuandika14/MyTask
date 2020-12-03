@@ -36,8 +36,8 @@ public class CommentActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ArrayList<Comment> list;
     private CommentsAdapter adapter;
-    private int taskId=0;
-    public static int postPosition =0;
+    private int task_id = 0;
+    public static int taskPosition = 0;
     private SharedPreferences preferences;
     private EditText txtAddComment;
     private ProgressDialog dialog;
@@ -51,24 +51,26 @@ public class CommentActivity extends AppCompatActivity {
     }
 
     private void init() {
+        taskPosition = getIntent().getIntExtra("taskPosition", -1);
+        preferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         dialog = new ProgressDialog(this);
         dialog.setCancelable(false);
-        postPosition = getIntent().getIntExtra("taskPosition", -1);
-        preferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+
+
 
         recyclerView = findViewById(R.id.recyclerComments);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        taskId = getIntent().getIntExtra("task_id", 0);
+        task_id = getIntent().getIntExtra("task_id", 0);
         getComments();
     }
 
     private void getComments() {
         list = new ArrayList<>();
-        StringRequest request = new StringRequest(Request.Method.GET,Constant.COMMENT, response -> {
+        StringRequest request = new StringRequest(Request.Method.GET,Constant.COMMENT, res -> {
 
             try {
-                JSONObject object = new JSONObject(response);
+                JSONObject object = new JSONObject(res);
                 if(object.getBoolean("success")){
                     JSONArray comments = new JSONArray(object.getString("comments"));
                     for (int i = 0; i < comments.length(); i++){
@@ -95,7 +97,7 @@ public class CommentActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
+            dialog.dismiss();
         },error -> {
             error.printStackTrace();
         }){
@@ -110,7 +112,7 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
-                map.put("id", taskId+"");
+                map.put("task_id", task_id+"");
                 return map;
             }
         };
@@ -132,31 +134,29 @@ public class CommentActivity extends AppCompatActivity {
 
                 try {
                     JSONObject object = new JSONObject(res);
-                    if (object.getBoolean("success"));
-                    JSONObject comment = object.getJSONObject("comment");
-                    JSONObject user = comment.getJSONObject("user");
+                    if (object.getBoolean("success")) {
+                        JSONObject comment = object.getJSONObject("comment");
+                        JSONObject user = comment.getJSONObject("user");
 
-                    Comment c = new Comment();
-                    User u = new User();
-                    u.setId(user.getInt("id"));
-                    u.setUserName(user.getString("name"));
-                    u.setPhoto(Constant.URL+"storage/profiles/"+user.getString("photo"));
-                    c.setUser(u);
-                    c.setId(comment.getInt("id"));
-                    c.setDate(comment.getString("created_at"));
-                    c.setComment(comment.getString("comment"));
+                        Comment c = new Comment();
+                        User u = new User();
+                        u.setId(user.getInt("id"));
+                        u.setUserName(user.getString("name"));
+                        //u.setPhoto(Constant.URL + "storage/profiles/" + user.getString("photo"));
+                        c.setUser(u);
+                        c.setId(comment.getInt("id"));
+                        c.setDate(comment.getString("created_at"));
+                        c.setComment(comment.getString("comment"));
 
-                    Task task = HomeFragment.arrayList.get(postPosition);
-                    task.setComments(task.getComments()+1);
-                    HomeFragment.arrayList.set(postPosition,task);
-                    HomeFragment.recyclerView.getAdapter().notifyDataSetChanged();
+                        Task task = HomeFragment.arrayList.get(taskPosition);
+                        task.setComments(task.getComments()+1);
+                        HomeFragment.arrayList.set(taskPosition,task);
+                        HomeFragment.recyclerView.getAdapter().notifyDataSetChanged();
 
-                    list.add(c);
-                    recyclerView.getAdapter().notifyDataSetChanged();
-                    txtAddComment.setText("");
-
-
-
+                        list.add(c);
+                        recyclerView.getAdapter().notifyDataSetChanged();
+                        txtAddComment.setText("");
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -168,14 +168,14 @@ public class CommentActivity extends AppCompatActivity {
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     String token = preferences.getString("token","");
                     HashMap<String,String> map = new HashMap<>();
-                    map.put("Authorization", "Bearer" +token);
+                    map.put("Authorization","Bearer " +token);
                     return map;
                 }
 
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     HashMap<String,String> map = new HashMap<>();
-                    map.put("id",taskId+"");
+                    map.put("id",task_id+"");
                     map.put("comment", commentText);
                     return map;
                 }

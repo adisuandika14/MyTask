@@ -52,7 +52,7 @@
 
         <EditText
             android:id="@+id/txtaddComment"
-            android:layout_width="290dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginRight="6dp"
@@ -61,16 +61,16 @@
             android:layout_marginLeft="6dp"
             android:hint="Write Something"
             android:inputType="textMultiLine"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
 
         <ImageButton
             android:layout_width="70dp"
             android:src="@drawable/ic_baseline_send_24"
             android:background="@drawable/btn_round"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="6dp"
-            android:id="@+id/btnAddComment"
+            android:layout_marginEnd="6dp"
             android:onClick="addComment"
+            android:id="@+id/btnAddComment"
             android:layout_height="30dp" />
 
     </LinearLayout>

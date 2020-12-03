@@ -1,7 +1,7 @@
 package com.example.mytask;
 
 public class Constant {
-        public static final String URL = "http://192.168.43.34";
+        public static final String URL = "http://192.168.1.15";
         public static final String HOME = URL+"/api";
         public static final String LOGIN = HOME+"/auth/login";
         public static final String REGISTER = HOME+"/auth/signup";
@@ -11,7 +11,7 @@ public class Constant {
         public static final String LOGOUT = HOME+"/auth/logout";
         public static final String UPDATE_POST = TASK+"/update";
         public static final String DELETE_POST = TASK+"/delete";
-        public static final String COMMENT = TASK+"/comment";
-        public static final String DELETE_COMMENT = TASK+"/comment/delete";
-        public static final String CREATE_COMMENT = TASK+"/comment/create";
+        public static final String COMMENT = TASK+"/comments";
+        public static final String DELETE_COMMENT = TASK+"/comments/delete";
+        public static final String CREATE_COMMENT = TASK+"/comments/create";
 }

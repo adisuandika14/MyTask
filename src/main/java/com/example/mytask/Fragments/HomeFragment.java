@@ -106,7 +106,7 @@ public class HomeFragment extends Fragment {
 
                         User user = new User();
                         user.setId(userObject.getInt("id"));
-                        user.setUserName(userObject.getString("name")+" "+userObject.getString("email"));
+                        user.setUserName(userObject.getString("name"));
                         //user.setPhoto(userObject.getString("file"));
 
                         Task task = new Task();
@@ -115,7 +115,7 @@ public class HomeFragment extends Fragment {
                         //task.setComments(taskObject.getInt("commentCount"));
                         task.setDate(taskObject.getString("created_at"));
                         task.setDesc(taskObject.getString("desc"));
-                        task.setPhoto(taskObject.getString("file"));
+                        //task.setPhoto(taskObject.getString("file"));
 
                         arrayList.add(task);
                     }
