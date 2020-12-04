@@ -25,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.mytask.CommentActivity;
 import com.example.mytask.Constant;
 import com.example.mytask.EditPostActivity;
+import com.example.mytask.Fragments.HomeFragment;
 import com.example.mytask.HomeActivity;
 import com.example.mytask.Models.Task;
 import com.example.mytask.R;
@@ -102,27 +103,29 @@ public class TaskAdapter extends RecyclerView.Adapter <TaskAdapter.TaskHolder>{
                         }
                         case R.id.item_delete:{
                             deleteTask(task.getId(), position);
+                            return true;
                         }
                     }
                     return false;
                 }
 
-                private void deleteTask(int id, int position) {
+                private void deleteTask(int task_id, int position) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setTitle("Confirm");
-                    builder.setMessage(" Delete Post");
+                    builder.setMessage("Delete Post ?");
                     builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             StringRequest request = new StringRequest(Request.Method.POST, Constant.DELETE_POST, response -> {
                                 try {
                                     JSONObject object = new JSONObject(response);
-                                    if(object.getBoolean("success"));
-                                    list.remove(position);
-                                    notifyItemRemoved(position);
-                                    notifyDataSetChanged();
-                                    listAll.clear();
-                                    listAll.addAll(list);
+                                    if(object.getBoolean("success")) {
+                                        list.remove(position);
+                                        notifyItemRemoved(position);
+                                        notifyDataSetChanged();
+                                        listAll.clear();
+                                        listAll.addAll(list);
+                                    }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -139,7 +142,7 @@ public class TaskAdapter extends RecyclerView.Adapter <TaskAdapter.TaskHolder>{
                                 @Override
                                 protected Map<String, String> getParams() throws AuthFailureError {
                                     HashMap<String,String> map = new HashMap<>();
-                                    map.put("id", id+"");
+                                    map.put("id", task_id+"");
                                     return map;
                                 }
                             };
@@ -161,14 +164,14 @@ public class TaskAdapter extends RecyclerView.Adapter <TaskAdapter.TaskHolder>{
 
         holder.txtComment.setOnClickListener(v->{
             Intent i = new Intent(((HomeActivity)context), CommentActivity.class);
-            i.putExtra("id",task.getId());
+            i.putExtra("task_id",task.getId());
             i.putExtra("taskPosition",position);
             context.startActivity(i);
         });
 
         holder.btnComment.setOnClickListener(v->{
             Intent i = new Intent(((HomeActivity)context),CommentActivity.class);
-            i.putExtra("id",task.getId());
+            i.putExtra("task_id",task.getId());
             i.putExtra("taskPosition",position);
             context.startActivity(i);
         });

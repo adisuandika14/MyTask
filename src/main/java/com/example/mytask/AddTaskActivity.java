@@ -74,12 +74,7 @@ public class AddTaskActivity extends AppCompatActivity {
         }
 
         btnpost.setOnClickListener(v->{
-            if(!txtdesc.getText().toString().isEmpty()){
                 post();
-            }
-            else{
-                Toast.makeText(this, "Post Description Is Required",Toast.LENGTH_SHORT).show();
-            }
         });
     }
 
@@ -92,13 +87,13 @@ public class AddTaskActivity extends AppCompatActivity {
             try {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")) {
-                    JSONObject postObject = object.getJSONObject("post");
+                    JSONObject postObject = object.getJSONObject("task");
                     JSONObject userObject = postObject.getJSONObject("user");
 
                     User user = new User();
                     user.setId(userObject.getInt("id"));
                     user.setUserName(userObject.getString("name") + " " + userObject.getString("email"));
-                    //user.setPhoto(userObject.getString("file"));
+                    user.setPhoto(userObject.getString("file"));
 
                     Task task = new Task();
                     task.setId(postObject.getInt("id"));
@@ -123,8 +118,8 @@ public class AddTaskActivity extends AppCompatActivity {
             }
             dialog.dismiss();
         },error -> {
-                error.printStackTrace();
-                dialog.dismiss();
+            error.printStackTrace();
+            dialog.dismiss();
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

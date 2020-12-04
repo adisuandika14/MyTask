@@ -3,4 +3,5 @@
     <item name="txtTaskComment" type="id" />
     <item name="imgTaskPhoto" type="id" />
     <item name="btnTaskComment" type="id" />
+    <item name="addTask" type="id" />
 </resources>

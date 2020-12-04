@@ -61,7 +61,7 @@ public class CommentActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerComments);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        task_id = getIntent().getIntExtra("task_id", 0);
+        task_id = getIntent().getIntExtra("id", 0);
         getComments();
     }
 
