@@ -164,14 +164,14 @@ public class TaskAdapter extends RecyclerView.Adapter <TaskAdapter.TaskHolder>{
 
         holder.txtComment.setOnClickListener(v->{
             Intent i = new Intent(((HomeActivity)context), CommentActivity.class);
-            i.putExtra("task_id",task.getId());
+            i.putExtra("id",task.getId());
             i.putExtra("taskPosition",position);
             context.startActivity(i);
         });
 
         holder.btnComment.setOnClickListener(v->{
             Intent i = new Intent(((HomeActivity)context),CommentActivity.class);
-            i.putExtra("task_id",task.getId());
+            i.putExtra("id",task.getId());
             i.putExtra("taskPosition",position);
             context.startActivity(i);
         });

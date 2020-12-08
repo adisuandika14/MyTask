@@ -160,17 +160,17 @@ public class AddTaskActivity extends AppCompatActivity {
         startActivityForResult(i,GALLERY_CHANGE_TASK);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==GALLERY_CHANGE_TASK && resultCode==RESULT_OK){
-            Uri imgUri = data.getData();
-            imgpost.setImageURI(imgUri);
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imgUri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+    //@Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(requestCode==GALLERY_CHANGE_TASK && resultCode==RESULT_OK){
+//            Uri imgUri = data.getData();
+//            imgpost.setImageURI(imgUri);
+//            try {
+//                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imgUri);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 }

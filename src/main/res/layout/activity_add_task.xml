@@ -53,7 +53,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Change Photo"
+                android:text="Change Path"
                 android:layout_marginBottom="20dp"
                 android:textColor="@color/colorPrimary"
                 android:layout_gravity="center_horizontal"

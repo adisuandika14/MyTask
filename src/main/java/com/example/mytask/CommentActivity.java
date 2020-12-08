@@ -112,7 +112,7 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
-                map.put("task_id", task_id+"");
+                map.put("id", task_id+"");
                 return map;
             }
         };

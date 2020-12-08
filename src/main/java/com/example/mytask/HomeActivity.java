@@ -9,7 +9,9 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.mytask.Fragments.AccountFragment;
 import com.example.mytask.Fragments.HomeFragment;
@@ -25,6 +27,8 @@ public class HomeActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private static final int GALLERY_ADD_TASK = 2;
     private BottomNavigationView navigationView;
+    private Intent MyFileIntent;
+    private static final int ACTION_GET_CONTENT =2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,18 +74,45 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        fab.setOnClickListener(v->{
-            Intent i = new Intent(Intent.ACTION_PICK);
-            i.setType("image/*");
-            startActivityForResult(i,GALLERY_ADD_TASK);
+//        fab.setOnClickListener(v->{
+//            Intent i = new Intent(Intent.ACTION_PICK);
+//            i.setType("image/*");
+//            startActivityForResult(i,GALLERY_ADD_TASK);
+//        });
+
+        fab.setOnClickListener(v-> {
+                Intent  MyFileIntent = new Intent(Intent.ACTION_PICK);
+                MyFileIntent.setType("*/*");
+                startActivityForResult(MyFileIntent,ACTION_GET_CONTENT);
         });
     }
+
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(requestCode==GALLERY_ADD_TASK && resultCode==RESULT_OK){
+//            Uri imgUri = data.getData();
+//            Intent i = new Intent(HomeActivity.this,AddTaskActivity.class);
+//            i.setData(imgUri);
+//            startActivity(i);
+//        }
+//    }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==GALLERY_ADD_TASK && resultCode==RESULT_OK){
+//        switch(requestCode){
+//            case 10:
+//                if (requestCode==RESULT_OK){
+//                    String patch  = data.getData().getPath();
+//
+//                }
+//                break;
+//        }
+
+        if(requestCode==ACTION_GET_CONTENT && resultCode==RESULT_OK){
             Uri imgUri = data.getData();
             Intent i = new Intent(HomeActivity.this,AddTaskActivity.class);
             i.setData(imgUri);

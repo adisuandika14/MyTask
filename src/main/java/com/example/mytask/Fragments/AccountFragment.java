@@ -24,6 +24,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.mytask.Adapter.AccountTaskAdapter;
 import com.example.mytask.AuthActivity;
 import com.example.mytask.Constant;
+import com.example.mytask.EditPostActivity;
+import com.example.mytask.EditUserInfoActivity;
 import com.example.mytask.HomeActivity;
 import com.example.mytask.Models.Task;
 import com.example.mytask.R;
@@ -34,6 +36,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,6 +57,7 @@ public class AccountFragment extends Fragment {
     private RecyclerView recyclerView;
     private ArrayList<Task> arrayList;
     private AccountTaskAdapter adapter;
+    private String imgUrl ="";
 
     private SharedPreferences preferences;
 
@@ -80,7 +84,13 @@ public class AccountFragment extends Fragment {
         btnEditAccount = view.findViewById(R.id.btnEditAccount);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        getData( );
+
+
+        btnEditAccount.setOnClickListener(v -> {
+            Intent i = new Intent(((HomeActivity)getContext()), EditUserInfoActivity.class);
+            i.putExtra("imgUrl",imgUrl);
+            startActivity(i);
+        });
     }
 
     private void getData() {
@@ -104,6 +114,7 @@ public class AccountFragment extends Fragment {
                     Picasso.get().load(Constant.URL+"storage/profiles/"+user.getString("photo")).into(imgProfile);
                     adapter = new AccountTaskAdapter(getContext(),arrayList);
                     recyclerView.setAdapter(adapter);
+                    imgUrl = Constant.URL+"storage/profiles/"+user.getString("photo");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -174,6 +185,7 @@ public class AccountFragment extends Fragment {
 
         },error->{
             error.printStackTrace();
+
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -185,5 +197,11 @@ public class AccountFragment extends Fragment {
         };
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(request);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getData();
     }
 }
